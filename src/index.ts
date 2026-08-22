@@ -1,5 +1,5 @@
 import 'dotenv/config'
-import { buildBot } from './bot/bot.js'
+import { buildBot } from './bot/bot.ts'
 
 async function main(): Promise<void> {
   const token = process.env.BOT_TOKEN
