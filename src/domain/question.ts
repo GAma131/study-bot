@@ -1,7 +1,8 @@
 import { z } from 'zod'
 
-const QuestionSchema = z.object({
+export const QuestionSchema = z.object({
   id: z.string(),
+  topic: z.string(),
   text: z.string().min(10),
   options: z.array(z.object({
     key: z.enum(['A', 'B', 'C', 'D']),

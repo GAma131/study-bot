@@ -1,0 +1,67 @@
+[
+  {
+    "id": "tu-001",
+    "topic": "tool-use",
+    "text": "¿Cuál es el valor por defecto de `tool_choice` cuando se proporcionan tools en la API de Claude?",
+    "options": [
+      { "key": "A", "label": "auto — Claude decide si usar una tool o no" },
+      { "key": "B", "label": "any — Claude debe usar alguna tool" },
+      { "key": "C", "label": "none — Claude no puede usar tools" },
+      { "key": "D", "label": "tool — Claude debe usar una tool específica" }
+    ],
+    "correctKey": "A",
+    "explanation": "Cuando se pasan tools sin especificar tool_choice, el valor por defecto es {\"type\": \"auto\"}, que deja a Claude decidir si necesita usar una tool según la petición del usuario."
+  },
+  {
+    "id": "tu-002",
+    "topic": "tool-use",
+    "text": "¿Qué valor de `tool_choice` obliga a Claude a usar alguna de las tools disponibles, sin forzar cuál en específico?",
+    "options": [
+      { "key": "A", "label": "auto" },
+      { "key": "B", "label": "any" },
+      { "key": "C", "label": "none" },
+      { "key": "D", "label": "tool" }
+    ],
+    "correctKey": "B",
+    "explanation": "{\"type\": \"any\"} obliga a Claude a invocar al menos una tool de las disponibles, pero no fija cuál — a diferencia de {\"type\": \"tool\", \"name\": \"...\"} que sí especifica una en concreto."
+  },
+  {
+    "id": "pe-001",
+    "topic": "prompt-engineering",
+    "text": "¿Cómo se le llama a la técnica de pedirle a Claude que razone paso a paso antes de dar la respuesta final?",
+    "options": [
+      { "key": "A", "label": "Few-shot prompting" },
+      { "key": "B", "label": "Chain-of-thought prompting" },
+      { "key": "C", "label": "Prompt chaining" },
+      { "key": "D", "label": "Prefilling" }
+    ],
+    "correctKey": "B",
+    "explanation": "Chain-of-thought (cadena de pensamiento) consiste en pedirle a Claude que piense en voz alta antes de responder, lo que suele mejorar la precisión en tareas complejas."
+  },
+  {
+    "id": "pe-002",
+    "topic": "prompt-engineering",
+    "text": "¿Para qué se recomienda usar etiquetas XML (como <document> o <instructions>) dentro de un prompt?",
+    "options": [
+      { "key": "A", "label": "Son obligatorias para que la API acepte el prompt" },
+      { "key": "B", "label": "Para separar claramente distintas secciones del prompt y reducir ambigüedad" },
+      { "key": "C", "label": "Para activar automáticamente el modo de extended thinking" },
+      { "key": "D", "label": "Para forzar una respuesta en formato XML" }
+    ],
+    "correctKey": "B",
+    "explanation": "Las etiquetas XML no tienen un significado especial a nivel de API, pero ayudan a Claude a distinguir claramente partes del prompt (instrucciones vs. datos de entrada), reduciendo errores de interpretación."
+  },
+  {
+    "id": "pe-003",
+    "topic": "prompt-engineering",
+    "text": "Cuando incluyes varios ejemplos de pares entrada/salida dentro del prompt para guiar el formato de la respuesta, ¿cómo se le llama a esa técnica?",
+    "options": [
+      { "key": "A", "label": "Zero-shot prompting" },
+      { "key": "B", "label": "Role prompting" },
+      { "key": "C", "label": "Few-shot prompting" },
+      { "key": "D", "label": "Response prefilling" }
+    ],
+    "correctKey": "C",
+    "explanation": "Few-shot prompting es incluir varios ejemplos representativos dentro del prompt para que Claude infiera el patrón esperado de formato y contenido."
+  }
+]
