@@ -1,12 +1,16 @@
 import { Bot, type Context } from 'grammy'
+import { QuestionRepository } from '../questions/repository'
+import { registerStudyCommand } from './commands/study'
 
-export function buildBot(token: string): Bot<Context> {
+export async function buildBot(token: string): Promise<Bot<Context>> {
   const bot = new Bot<Context>(token)
 
   bot.command('start', (ctx) =>
-    ctx.reply('¡Hola! Soy tu Study Bot. Escribe /heop para ver los comandos')
+    ctx.reply('¡Hola!')
   )
-
+  const repo = new QuestionRepository()
+  await repo.load()
+  registerStudyCommand(bot, repo)
   return bot
 }
 

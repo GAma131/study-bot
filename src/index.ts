@@ -8,7 +8,7 @@ async function main(): Promise<void> {
     throw new Error('BOT_TOKEN is required')
   }
 
-  const bot = buildBot(token)
+  const bot = await buildBot(token)
   
   process.on('SIGINT', async () => {
     await bot.stop()
