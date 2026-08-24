@@ -1,4 +1,5 @@
 import type { Question } from '../../domain/question.js';
+import { escapeHtml } from './escape-html.js';
 
 export function formatAnswer(q: Question): string {
   // right question
@@ -8,9 +9,9 @@ export function formatAnswer(q: Question): string {
   const msg = `
   ✅ <b>Respuesta correcta</b> \n
   \n
-  <b>${rq.key} - ${rq.label}</b> \n
+  <b>${rq.key} - ${escapeHtml(rq.label)}</b> \n
   \n
-  💡 ${q.explanation}
+  💡 ${escapeHtml(q.explanation)}
   `;
 
   return msg;

@@ -1,4 +1,5 @@
 import { Question } from '../../domain/question.js';
+import { escapeHtml } from './escape-html.js';
 
 const EMOJI_POOL = [
   '🎯', '🔥', '⭐', '🚀', '💡', '🎲', '🎪', '🌟',
@@ -18,15 +19,15 @@ export function formatQuestion(q: Question) {
 
   const opciones = q.options.map((opt, idx) => {
     const emoji = emojis[idx]
-    const linea = `${emoji} <b>${opt.key}</b> - ${opt.label}`
+    const linea = `${emoji} <b>${opt.key}</b> - ${escapeHtml(opt.label)}`
     return linea
   })
   const bloqueOpciones = opciones.join('\n')
 
   const msg = `
-  📚 <b>${q.topic}</b> \n
+  📚 <b>${escapeHtml(q.topic)}</b> \n
   \n
-  ${q.text}
+  ${escapeHtml(q.text)}
   \n
   ${bloqueOpciones}\n
   \n
