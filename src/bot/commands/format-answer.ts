@@ -7,10 +7,10 @@ export function formatAnswer(q: Question): string {
   if(!rq) throw new Error(`No se encontró la opción correcta ${q.correctKey}`)
 
   const msg = `
-  ✅ <b>Respuesta correcta</b> \n
-  \n
-  <b>${rq.key} - ${escapeHtml(rq.label)}</b> \n
-  \n
+  ✅ <b>Respuesta correcta</b>
+
+  <b>${rq.key} - ${escapeHtml(rq.label)}</b>
+
   💡 ${escapeHtml(q.explanation)}
   `;
 

@@ -13,7 +13,7 @@ export function registerTopicsCommand(bot: Bot<Context>, repo: QuestionRepositor
     const list = topics.map((t) => `• ${t}.join(\n)`);
     return ctx.reply(
       `📂 <b>Temas disponibles</b>\n
-       \n
+
        ${list}
        `,
       { parse_mode: 'HTML' },

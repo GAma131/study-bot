@@ -8,7 +8,7 @@ export class SchedulerService {
     key: string,
     _question: Question,
     callback: () => Promise<void>,
-    delayMs: number = 5 * 6 * 1000,
+    delayMs: number = 5 * 60 * 1000, // Delay para enviar respuesta (5 min)
   ): Promise<void> {
     this.cancelReveal(key);
 

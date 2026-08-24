@@ -25,13 +25,13 @@ export function formatQuestion(q: Question) {
   const bloqueOpciones = opciones.join('\n')
 
   const msg = `
-  📚 <b>${escapeHtml(q.topic)}</b> \n
-  \n
+  📚 <b>${escapeHtml(q.topic)}</b>
+
   ${escapeHtml(q.text)}
-  \n
+  
   ${bloqueOpciones}\n
-  \n
-  💭 Reacciona al mensaje con el emoji de tu respuesta
+
+  💭 Reacciona al mensaje con tu respuesta
   `;
 
   return msg
