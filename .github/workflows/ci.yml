@@ -1,0 +1,6 @@
+Checkout
+Setup Node 20
+npm ci
+npm run lint
+npm run typecheck
+npm test

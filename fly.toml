@@ -1,0 +1,7 @@
+app = "study-bot"
+primary_region = "iad"
+
+[build]
+
+[env]
+  NODE_ENV = "production"
