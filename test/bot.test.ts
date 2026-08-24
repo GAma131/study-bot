@@ -263,4 +263,60 @@ describe('buildBot', () => {
       })
     )
   });
+
+  it('responde a /topics listando los temas únicos del repositorio', async () => {
+    const scheduler = new SchedulerService();
+    const bot = await buildBot('TEST_TOKEN_DUMMY', scheduler);
+    bot.botInfo = {
+      id: 1,
+      is_bot: true,
+      first_name: 'Bot',
+      username: 'bot',
+    } as never;
+
+    const apiCalls: { method: string; payload: unknown }[] = [];
+    bot.api.config.use((prev, method, payload) => {
+      apiCalls.push({ method, payload: payload as any });
+      return Promise.resolve({
+        ok: true,
+        result: {
+            message_id: 1,
+          date: 0,
+          chat: { id: 1, type: 'private' },
+          text: (payload as any).text,
+        },
+      } as never);
+    });
+
+    const fakeUpdate = {
+      update_id: 1,
+      message: {
+        message_id: 1,
+        date: Math.floor(Date.now() / 1000),
+        chat: { id: 12345, type: 'private' as const },
+        from: { id: 67890, is_bot: false, first_name: 'Test' },
+        text: '/topics',
+        entities: [
+          {
+            type: 'bot_command' as const,
+            offset: 0,
+            length: 7,
+          },
+        ],
+      },
+    };
+
+    await bot.handleUpdate(fakeUpdate as never);
+
+    const topicsCall = apiCalls.find((c) =>
+      (c.payload as any).text?.includes('Temas disponibles'),
+    );
+    expect(topicsCall).toBeDefined()
+    expect(topicsCall?.payload).toEqual(
+      expect.objectContaining({
+        parse_mode: 'HTML',
+        text: expect.stringMatching(/•\s/),
+      })
+    )
+  });
 });

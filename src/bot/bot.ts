@@ -4,6 +4,7 @@ import { registerStudyCommand } from './commands/study';
 import { SchedulerService } from '../scheduler/study-scheduler';
 import { registerStudyStopCommand } from './commands/study-stop';
 import { registerHelpCommand } from './commands/help';
+import { registerTopicsCommand } from './commands/topics';
 
 export async function buildBot(token: string, scheduler: SchedulerService): Promise<Bot<Context>> {
   const bot = new Bot<Context>(token);
@@ -16,6 +17,7 @@ export async function buildBot(token: string, scheduler: SchedulerService): Prom
   registerStudyCommand(bot, repo, scheduler);
   registerStudyStopCommand(bot, scheduler);
   registerHelpCommand(bot)
+  registerTopicsCommand(bot, repo)
 
   return bot;
 }
