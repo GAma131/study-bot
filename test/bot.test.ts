@@ -1,9 +1,11 @@
 import { describe, it, expect } from 'vitest'
 import { buildBot } from '../src/bot/bot.ts'
+import { SchedulerService } from '../src/scheduler/study-scheduler.ts'
 
 describe('buildBot', () => {
   it('responde el comando /start', async () => {
-    const bot = await buildBot('TEST_TOKEN_DUMMY')
+    const scheduler = new SchedulerService()
+    const bot = await buildBot('TEST_TOKEN_DUMMY', scheduler)
     bot.botInfo = {
       id: 12345,
       is_bot: true,
@@ -47,7 +49,8 @@ describe('buildBot', () => {
   })
 
   it('responde a /study con una pregunta formateada', async () => {
-    const bot = await buildBot('TEST_TOKEN_DUMMY')
+    const scheduler = new SchedulerService()
+    const bot = await buildBot('TEST_TOKEN_DUMMY', scheduler)
     bot.botInfo = {
       id: 1,
       is_bot: true,
