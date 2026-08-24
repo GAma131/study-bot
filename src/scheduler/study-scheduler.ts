@@ -1,7 +1,8 @@
 import { Question } from '../domain/question';
 
 export class SchedulerService {
-  private timers: Map<string, NodeJS.Timeout> = new Map();
+  private revealTimers: Map<string, NodeJS.Timeout> = new Map();
+  private recurringTimers: Map<string, NodeJS.Timeout> = new Map();
 
   async scheduleReveal(
     key: string,
@@ -12,7 +13,7 @@ export class SchedulerService {
     this.cancel(key);
 
     const timer = setTimeout(async () => {
-      this.timers.delete(key);
+      this.revealTimers.delete(key);
 
       try {
         await callback();
@@ -21,25 +22,52 @@ export class SchedulerService {
       }
     }, delayMs);
 
-    this.timers.set(key, timer);
+    this.revealTimers.set(key, timer);
+  }
+
+  async scheduleRecurring(key: string, callback: () => void, intervalMs: number): Promise<void> {
+    this.cancelRecurring(key);
+
+    const timer = setInterval(() => {
+      try {
+        callback();
+      } catch (err) {
+        console.error('Recurring callback failed:', err);
+      }
+    }, intervalMs);
+
+    this.recurringTimers.set(key, timer);
   }
 
   cancel(key: string): void {
-    const existing = this.timers.get(key);
+    const existing = this.revealTimers.get(key);
     if (existing) {
       clearTimeout(existing);
-      this.timers.delete(key);
+      this.revealTimers.delete(key);
+    }
+  }
+
+  cancelRecurring(key: string): void {
+    const existing = this.recurringTimers.get(key);
+    if (existing) {
+      clearInterval(existing);
+      this.revealTimers.delete(key);
     }
   }
 
   cancelAll(): void {
-    for (const timer of this.timers.values()) {
+    for (const timer of this.revealTimers.values()) {
       clearTimeout(timer);
     }
-    this.timers.clear();
+    this.revealTimers.clear();
+
+    for (const timer of this.recurringTimers.values()) {
+      clearInterval(timer);
+    }
+    this.recurringTimers.clear();
   }
 
   hasPending(key: string): boolean {
-    return this.timers.has(key);
+    return this.revealTimers.has(key);
   }
 }

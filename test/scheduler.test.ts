@@ -49,4 +49,29 @@ describe('SchedulerService', () => {
     expect(cb1).not.toHaveBeenCalled()
     expect(cb2).toHaveBeenCalledTimes(1)
   })
+
+  it('ejecuta el callback cada intervalo', () => {
+    const scheduler = new SchedulerService()
+    const cb = vi.fn()
+
+    scheduler.scheduleRecurring('chat-1', cb, 1000)
+
+    vi.advanceTimersByTime(2500)
+
+    expect(cb).toHaveBeenCalledTimes(2)
+  })
+
+  it('cancela el recurrente con cancelRecurring', () => {
+    const scheduler = new SchedulerService()
+    const cb = vi.fn()
+
+    scheduler.scheduleRecurring('chat-1', cb, 1000)
+    vi.advanceTimersByTime(1500)
+    expect(cb).toHaveBeenCalledTimes(1)
+
+    scheduler.cancelRecurring('chat-1')
+    vi.advanceTimersByTime(3000)
+
+    expect(cb).toHaveBeenCalledTimes(1)
+  })
 })
