@@ -10,10 +10,9 @@ export function registerTopicsCommand(bot: Bot<Context>, repo: QuestionRepositor
       return ctx.reply('No hay temas disponibles todavía');
     }
 
-    const list = topics.map((t) => `• ${t}.join(\n)`);
+    const list = topics.map((t) => `\n• ${t}`);
     return ctx.reply(
-      `📂 <b>Temas disponibles</b>\n
-
+      `📂 <b>Temas disponibles</b>
        ${list}
        `,
       { parse_mode: 'HTML' },

@@ -5,10 +5,10 @@ export const QuestionSchema = z.object({
   topic: z.string(),
   text: z.string().min(10),
   options: z.array(z.object({
-    key: z.enum(['A', 'B', 'C', 'D']),
+    key: z.string().min(1),
     label: z.string()
   })).length(4),
-  correctKey: z.enum(['A', 'B', 'C', 'D']),
+  correctKey: z.string().min(1),
   explanation: z.string().min(10),
 })
 

@@ -51,6 +51,6 @@ export function registerStudyCommand(
       intervalMin * 60 * 1000,
     );
 
-    await ctx.reply(`✅ Modo estudio activado. Enviaré una pregunta cada ${intervalMin} minutos.`)
+    await ctx.reply(`Modo estudio activado. Enviaré una pregunta cada ${intervalMin} minutos.`)
   });
 }
