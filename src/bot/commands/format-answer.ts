@@ -1,4 +1,4 @@
-import type { Question } from '../../domain/question';
+import type { Question } from '../../domain/question.js';
 
 export function formatAnswer(q: Question): string {
   // right question

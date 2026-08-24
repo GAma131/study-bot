@@ -1,5 +1,5 @@
 import { type Bot, type Context } from 'grammy';
-import { QuestionRepository } from '../../questions/repository';
+import { QuestionRepository } from '../../questions/repository.js';
 
 export function registerTopicsCommand(bot: Bot<Context>, repo: QuestionRepository): void {
   bot.command('topics', (ctx) => {

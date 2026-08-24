@@ -1,6 +1,6 @@
 import { describe, it, expect} from "vitest";
-import { Question } from "../src/domain/question";
-import { formatQuestion } from "../src/bot/commands/format-question";
+import { Question } from "../src/domain/question.js";
+import { formatQuestion } from "../src/bot/commands/format-question.js";
 
 const fakeQuestion: Question = {
   id: 'test-001',

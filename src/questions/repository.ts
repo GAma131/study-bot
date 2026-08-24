@@ -1,7 +1,7 @@
 import { readFile } from 'node:fs/promises';
 import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { QuestionSchema, type Question } from '../domain/question';
+import { QuestionSchema, type Question } from '../domain/question.js';
 
 export class QuestionRepository {
   private questions: Question[] = [];

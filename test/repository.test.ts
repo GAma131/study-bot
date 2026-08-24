@@ -1,5 +1,5 @@
 import { describe, it, expect} from "vitest";
-import { QuestionRepository } from "../src/questions/repository";
+import { QuestionRepository } from "../src/questions/repository.js";
 
 describe('QuestionRepository', () => {
   it('carga las preguntas dedsde data.json', async () => {

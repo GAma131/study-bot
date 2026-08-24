@@ -1,6 +1,6 @@
 import { describe, it, expect, vi, afterEach, beforeEach} from "vitest";
-import { SchedulerService } from "../src/scheduler/study-scheduler";
-import type { Question } from "../src/domain/question";
+import { SchedulerService } from "../src/scheduler/study-scheduler.js";
+import type { Question } from "../src/domain/question.js";
 
 const fakeQuestion: Question = {
   id: 'test-001',

@@ -1,4 +1,4 @@
-import { QuestionSchema } from '../src/domain/question.ts'
+import { QuestionSchema } from '../src/domain/question.js'
 import data from '../src/questions/data.json'
 
 const result = QuestionSchema.array().safeParse(data)

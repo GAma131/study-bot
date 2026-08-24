@@ -1,6 +1,6 @@
 import 'dotenv/config';
-import { buildBot } from './bot/bot.ts';
-import { SchedulerService } from './scheduler/study-scheduler.ts';
+import { buildBot } from './bot/bot.js';
+import { SchedulerService } from './scheduler/study-scheduler.js';
 
 async function main(): Promise<void> {
   const token = process.env.BOT_TOKEN;

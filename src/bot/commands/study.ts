@@ -1,8 +1,8 @@
 import { type Bot, type Context } from 'grammy';
-import { QuestionRepository } from '../../questions/repository';
-import { formatQuestion } from './format-question';
-import { SchedulerService } from '../../scheduler/study-scheduler';
-import { formatAnswer } from './format-answer';
+import { QuestionRepository } from '../../questions/repository.js';
+import { formatQuestion } from './format-question.js';
+import { SchedulerService } from '../../scheduler/study-scheduler.js';
+import { formatAnswer } from './format-answer.js';
 
 async function sendQuestionToChat(
   chatId: number,

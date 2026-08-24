@@ -1,4 +1,4 @@
-import { Question } from '../../domain/question';
+import { Question } from '../../domain/question.js';
 
 const EMOJI_POOL = [
   '🎯', '🔥', '⭐', '🚀', '💡', '🎲', '🎪', '🌟',

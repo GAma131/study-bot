@@ -13,12 +13,13 @@
     "skipLibCheck": true,
     "resolveJsonModule": true,
     "forceConsistentCasingInFileNames": true,
-    "allowImportingTsExtensions": true,
     "isolatedModules": true,
     "outDir": "./dist",
     "declaration": true,
     "sourceMap": true,
     "removeComments": false,
     "types": ["node"]
-  }
+  },
+  "include": ["src/**/*"],
+  "exclude": ["node_modules", "dist", "test"]
 }

@@ -1,6 +1,6 @@
 import { describe, it, expect, vi } from 'vitest';
-import { buildBot } from '../src/bot/bot.ts';
-import { SchedulerService } from '../src/scheduler/study-scheduler.ts';
+import { buildBot } from '../src/bot/bot.js';
+import { SchedulerService } from '../src/scheduler/study-scheduler.js';
 
 describe('buildBot', () => {
   it('responde el comando /start', async () => {

@@ -1,8 +1,8 @@
 import { describe, it, expect, beforeEach, vi, afterEach } from 'vitest';
-import { QuestionRepository } from '../src/questions/repository';
-import { SchedulerService } from '../src/scheduler/study-scheduler';
+import { QuestionRepository } from '../src/questions/repository.js';
+import { SchedulerService } from '../src/scheduler/study-scheduler.js';
 import { Bot, Context } from 'grammy';
-import { registerStudyCommand } from '../src/bot/commands/study';
+import { registerStudyCommand } from '../src/bot/commands/study.js';
 
 describe('integration: /study end-to-end', () => {
   beforeEach(() => {

@@ -1,4 +1,4 @@
-import { Question } from '../domain/question';
+import { Question } from '../domain/question.js';
 
 export class SchedulerService {
   private revealTimers: Map<string, NodeJS.Timeout> = new Map();

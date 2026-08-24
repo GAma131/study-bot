@@ -1,5 +1,5 @@
 import { type Bot, type Context } from 'grammy';
-import { SchedulerService } from '../../scheduler/study-scheduler';
+import { SchedulerService } from '../../scheduler/study-scheduler.js';
 
 export function registerStudyStopCommand(
   bot: Bot<Context>,
