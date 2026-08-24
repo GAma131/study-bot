@@ -10,7 +10,7 @@ export class SchedulerService {
     callback: () => Promise<void>,
     delayMs: number = 5 * 6 * 1000,
   ): Promise<void> {
-    this.cancel(key);
+    this.cancelReveal(key);
 
     const timer = setTimeout(async () => {
       this.revealTimers.delete(key);
@@ -39,7 +39,7 @@ export class SchedulerService {
     this.recurringTimers.set(key, timer);
   }
 
-  cancel(key: string): void {
+  cancelReveal(key: string): void {
     const existing = this.revealTimers.get(key);
     if (existing) {
       clearTimeout(existing);
