@@ -10,7 +10,7 @@ async function sendQuestionToChat(
   repo: QuestionRepository,
   scheduler: SchedulerService,
 ): Promise<void> {
-  const question = await repo.getRandom();
+  const question = await repo.getRandom(chatId);
   const questionText = formatQuestion(question);
 
   const sentMessage = await bot.api.sendMessage(chatId, questionText, {
