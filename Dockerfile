@@ -5,7 +5,6 @@ COPY package*.json ./
 RUN npm ci
 COPY . .
 RUN npm run build
-COPY src/questions/data.json ./dist/questions/data.json
 
 # runtime
 FROM node:20-alpine

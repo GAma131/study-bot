@@ -12,6 +12,28 @@ interface MockPayload {
   [key: string]: unknown;
 }
 
+const mockQuestion = {
+  id: 'int-001',
+  topic: 'integration',
+  text: '¿Pregunta de integración?',
+  options: [
+    { key: '👍', label: 'A' },
+    { key: '❤️', label: 'B' },
+    { key: '😂', label: 'C' },
+    { key: '🤣', label: 'D' },
+  ],
+  correctKey: '👍',
+  explanation: 'Explicación de integración',
+};
+
+const mockDb = {
+  collection: () => ({
+    find: () => ({ toArray: () => Promise.resolve([mockQuestion]) }),
+    aggregate: () => ({ toArray: () => Promise.resolve([mockQuestion]) }),
+    findOne: () => Promise.resolve(mockQuestion),
+  }),
+} as never;
+
 describe('integration: /study end-to-end', () => {
   beforeEach(() => {
     vi.useFakeTimers();
@@ -22,8 +44,7 @@ describe('integration: /study end-to-end', () => {
   });
 
   it('envía la pregunta y luego la respuesta 5 min después', async () => {
-    const repo = new QuestionRepository();
-    await repo.load();
+    const repo = new QuestionRepository(mockDb);
     const scheduler = new SchedulerService();
 
     const bot = new Bot<Context>('TEST');
