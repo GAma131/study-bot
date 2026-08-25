@@ -4,7 +4,7 @@ sidebar_position: 2
 
 # Study Bot
 
-Bot de Telegram para estudiar la certificación de Anthropic.
+Bot de Telegram para estudiar.
 
 ## ¿Qué es?
 

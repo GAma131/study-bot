@@ -1,6 +1,6 @@
 # Study Bot 📚
 
-Bot de Telegram para estudiar la certificación de Anthropic. Te envía preguntas de opción múltiple cada cierto tiempo, esperas tu respuesta mentalmente, y 5 minutos después te revela la respuesta correcta con explicación.
+Bot de Telegram para estudiar. Te envía preguntas de opción múltiple cada cierto tiempo, esperas tu respuesta mentalmente, y 5 minutos después te revela la respuesta correcta con explicación.
 
 Pensado para practicar en chats privados o de estudio grupal: cada quien reacciona con su emoji, nadie ve lo que votaron los demás, y la respuesta correcta llega después para que cada quien compare con su propio razonamiento.
 

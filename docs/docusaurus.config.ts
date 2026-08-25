@@ -4,7 +4,7 @@ import type * as Preset from '@docusaurus/preset-classic';
 
 const config: Config = {
   title: 'Study Bot',
-  tagline: 'Bot de Telegram para estudiar la certificación de Anthropic',
+  tagline: 'Bot de Telegram para estudiar.',
   favicon: 'img/favicon.ico',
 
   future: {
