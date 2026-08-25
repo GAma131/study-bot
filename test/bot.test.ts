@@ -31,6 +31,7 @@ const mockDb = {
     find: () => ({ toArray: () => Promise.resolve(mockQuestions) }),
     aggregate: () => ({ toArray: () => Promise.resolve([mockQuestions[0]]) }),
     findOne: () => Promise.resolve(mockQuestions[0]),
+    countDocuments: () => Promise.resolve(mockQuestions.length),
   }),
 } as never;
 
@@ -174,9 +175,9 @@ describe('buildBot', () => {
     await bot.handleUpdate(fakeUpdate as never);
 
     expect(apiCalls.length).toBeGreaterThan(0);
-    expect(
-      apiCalls.some((call) => call.payload.text?.includes('Modo estudio activado')),
-    ).toBe(true);
+    expect(apiCalls.some((call) => call.payload.text?.includes('Modo estudio activado'))).toBe(
+      true,
+    );
   });
 
   it('responde a /study_stop cancelando el recurrente', async () => {
@@ -226,10 +227,8 @@ describe('buildBot', () => {
 
     await bot.handleUpdate(fakeUpdate as never);
 
-    const confirmation = apiCalls.find((c) =>
-      c.payload.text?.includes('Modo estudio detenido'),
-    );
-    expect(confirmation).toBeDefined()
+    const confirmation = apiCalls.find((c) => c.payload.text?.includes('Modo estudio detenido'));
+    expect(confirmation).toBeDefined();
     expect(cancelRecurringSpy).toHaveBeenCalledWith('auto-12345');
     expect(cancelRevealSpy).toHaveBeenCalledWith('chat-12345');
   });
@@ -250,7 +249,7 @@ describe('buildBot', () => {
       return Promise.resolve({
         ok: true,
         result: {
-            message_id: 1,
+          message_id: 1,
           date: 0,
           chat: { id: 1, type: 'private' },
           text: payload.text,
@@ -278,22 +277,20 @@ describe('buildBot', () => {
 
     await bot.handleUpdate(fakeUpdate as never);
 
-    const helpCall = apiCalls.find((c) =>
-      c.payload.text?.includes('Study Bot'),
+    const helpCall = apiCalls.find((c) => c.payload.text?.includes('Study Bot'));
+    expect(helpCall).toBeDefined();
+    expect(helpCall?.payload).toEqual(
+      expect.objectContaining({
+        parse_mode: 'HTML',
+        text: expect.stringContaining('/study'),
+      }),
     );
-    expect(helpCall).toBeDefined()
     expect(helpCall?.payload).toEqual(
       expect.objectContaining({
         parse_mode: 'HTML',
-        text: expect.stringContaining('/study')
-      })
-    )
-    expect(helpCall?.payload).toEqual(
-      expect.objectContaining({
-        parse_mode: 'HTML',
-        text: expect.stringContaining('/study_stop')
-      })
-    )
+        text: expect.stringContaining('/study_stop'),
+      }),
+    );
   });
 
   it('responde a /topics listando los temas únicos del repositorio', async () => {
@@ -312,7 +309,7 @@ describe('buildBot', () => {
       return Promise.resolve({
         ok: true,
         result: {
-            message_id: 1,
+          message_id: 1,
           date: 0,
           chat: { id: 1, type: 'private' },
           text: payload.text,
@@ -340,15 +337,13 @@ describe('buildBot', () => {
 
     await bot.handleUpdate(fakeUpdate as never);
 
-    const topicsCall = apiCalls.find((c) =>
-      c.payload.text?.includes('Temas disponibles'),
-    );
-    expect(topicsCall).toBeDefined()
+    const topicsCall = apiCalls.find((c) => c.payload.text?.includes('Temas disponibles'));
+    expect(topicsCall).toBeDefined();
     expect(topicsCall?.payload).toEqual(
       expect.objectContaining({
         parse_mode: 'HTML',
         text: expect.stringMatching(/•\s/),
-      })
-    )
+      }),
+    );
   });
 });

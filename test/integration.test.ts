@@ -31,6 +31,7 @@ const mockDb = {
     find: () => ({ toArray: () => Promise.resolve([mockQuestion]) }),
     aggregate: () => ({ toArray: () => Promise.resolve([mockQuestion]) }),
     findOne: () => Promise.resolve(mockQuestion),
+    countDocuments: () => Promise.resolve(1),
   }),
 } as never;
 
@@ -115,7 +116,7 @@ describe('integration: /study end-to-end', () => {
 
     // 3. Verificar que se envió UNA llamada MÁS (la respuesta, como reply)
     const answerCall = apiCalls.find((c) => c.payload.reply_to_message_id !== undefined);
-    expect(answerCall).toBeDefined()
+    expect(answerCall).toBeDefined();
     expect(apiCalls.length).toBeGreaterThanOrEqual(3);
     expect(answerCall).toEqual(
       expect.objectContaining({

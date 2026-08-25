@@ -23,7 +23,7 @@ export class QuestionRepository {
       if (shown.length >= total) {
         this.shownByChat.set(chatId, []);
       } else if (shown.length > 0) {
-        filter.id = { $lnin: shown };
+        filter.id = { $nin: shown };
       }
     }
 
