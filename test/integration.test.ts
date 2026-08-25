@@ -4,6 +4,14 @@ import { SchedulerService } from '../src/scheduler/study-scheduler.js';
 import { Bot, Context } from 'grammy';
 import { registerStudyCommand } from '../src/bot/commands/study.js';
 
+interface MockPayload {
+  text?: string;
+  chat_id?: number;
+  parse_mode?: string;
+  reply_to_message_id?: number;
+  [key: string]: unknown;
+}
+
 describe('integration: /study end-to-end', () => {
   beforeEach(() => {
     vi.useFakeTimers();
@@ -27,13 +35,13 @@ describe('integration: /study end-to-end', () => {
     } as never;
     registerStudyCommand(bot, repo, scheduler);
 
-    const apiCalls: { method: string; payload: unknown }[] = [];
+    const apiCalls: { method: string; payload: MockPayload }[] = [];
     let lastMessageId = 100;
 
     bot.api.config.use((prev, method, payload) => {
-      apiCalls.push({ method, payload: payload as any });
+      const p = payload as MockPayload;
+      apiCalls.push({ method, payload: p });
       // Simula que Telegram devuelve un message_id incrementando
-      const p = payload as any;
       return Promise.resolve({
         ok: true,
         result: {
@@ -66,7 +74,7 @@ describe('integration: /study end-to-end', () => {
     await bot.handleUpdate(fakeUpdate as never);
 
     // 1. Verificar que se envió UNA llamada (la pregunta)
-    const questionCall = apiCalls.find((c) => (c.payload as any).text?.includes('Reacciona'));
+    const questionCall = apiCalls.find((c) => c.payload.text?.includes('Reacciona'));
     expect(questionCall).toBeDefined();
     expect(apiCalls.length).toBeGreaterThanOrEqual(1);
     expect(questionCall).toEqual(
@@ -85,7 +93,7 @@ describe('integration: /study end-to-end', () => {
     await vi.advanceTimersByTimeAsync(5 * 60 * 1000);
 
     // 3. Verificar que se envió UNA llamada MÁS (la respuesta, como reply)
-    const answerCall = apiCalls.find((c) => (c.payload as any).reply_to_message_id !== undefined);
+    const answerCall = apiCalls.find((c) => c.payload.reply_to_message_id !== undefined);
     expect(answerCall).toBeDefined()
     expect(apiCalls.length).toBeGreaterThanOrEqual(3);
     expect(answerCall).toEqual(

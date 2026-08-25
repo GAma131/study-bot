@@ -2,6 +2,14 @@ import { describe, it, expect, vi } from 'vitest';
 import { buildBot } from '../src/bot/bot.js';
 import { SchedulerService } from '../src/scheduler/study-scheduler.js';
 
+interface MockPayload {
+  text?: string;
+  chat_id?: number;
+  parse_mode?: string;
+  reply_to_message_id?: number;
+  [key: string]: unknown;
+}
+
 describe('buildBot', () => {
   it('responde el comando /start', async () => {
     const scheduler = new SchedulerService();
@@ -13,10 +21,10 @@ describe('buildBot', () => {
       username: 'test_bot',
     } as never;
 
-    const apiCalls: { method: string; payload: unknown }[] = [];
+    const apiCalls: { method: string; payload: MockPayload }[] = [];
 
     bot.api.config.use((prev, method, payload) => {
-      apiCalls.push({ method, payload });
+      apiCalls.push({ method, payload: payload as MockPayload });
       return Promise.resolve({ ok: true, result: {} } as never);
     });
 
@@ -60,9 +68,9 @@ describe('buildBot', () => {
       username: 'bot',
     } as never;
 
-    const apiCalls: { method: string; payload: unknown }[] = [];
+    const apiCalls: { method: string; payload: MockPayload }[] = [];
     bot.api.config.use((prev, method, payload) => {
-      apiCalls.push({ method, payload });
+      apiCalls.push({ method, payload: payload as MockPayload });
       return Promise.resolve({ ok: true, result: {} } as never);
     });
 
@@ -90,7 +98,7 @@ describe('buildBot', () => {
       expect.objectContaining({
         method: 'sendMessage',
         payload: expect.objectContaining({
-          text: expect.stringContaining('Reacciona al mensaje'),
+          text: expect.stringContaining('Reacciona con tu respuesta'),
           parse_mode: 'HTML',
         }),
       }),
@@ -107,16 +115,16 @@ describe('buildBot', () => {
       username: 'bot',
     } as never;
 
-    const apiCalls: { method: string; payload: unknown }[] = [];
+    const apiCalls: { method: string; payload: MockPayload }[] = [];
     bot.api.config.use((prev, method, payload) => {
-      apiCalls.push({ method, payload });
+      apiCalls.push({ method, payload: payload as MockPayload });
       return Promise.resolve({
         ok: true,
         result: {
           message_id: apiCalls.length + 100,
           date: Math.floor(Date.now() / 1000),
           chat: { id: 12345, type: 'private' },
-          text: (payload as any).text,
+          text: payload.text,
         },
       } as never);
     });
@@ -143,7 +151,7 @@ describe('buildBot', () => {
 
     expect(apiCalls.length).toBeGreaterThan(0);
     expect(
-      apiCalls.some((call) => (call.payload as any).text?.includes('Modo estudio activado')),
+      apiCalls.some((call) => call.payload.text?.includes('Modo estudio activado')),
     ).toBe(true);
   });
 
@@ -160,16 +168,16 @@ describe('buildBot', () => {
     const cancelRecurringSpy = vi.spyOn(scheduler, 'cancelRecurring');
     const cancelRevealSpy = vi.spyOn(scheduler, 'cancelReveal');
 
-    const apiCalls: { method: string; payload: unknown }[] = [];
+    const apiCalls: { method: string; payload: MockPayload }[] = [];
     bot.api.config.use((prev, method, payload) => {
-      apiCalls.push({ method, payload: payload as any });
+      apiCalls.push({ method, payload: payload as MockPayload });
       return Promise.resolve({
         ok: true,
         result: {
           message_id: apiCalls.length + 100,
           date: Math.floor(Date.now() / 1000),
           chat: { id: 12345, type: 'private' },
-          text: (payload as any).text,
+          text: payload.text,
         },
       } as never);
     });
@@ -195,7 +203,7 @@ describe('buildBot', () => {
     await bot.handleUpdate(fakeUpdate as never);
 
     const confirmation = apiCalls.find((c) =>
-      (c.payload as any).text?.includes('Modo estudio detenido'),
+      c.payload.text?.includes('Modo estudio detenido'),
     );
     expect(confirmation).toBeDefined()
     expect(cancelRecurringSpy).toHaveBeenCalledWith('auto-12345');
@@ -212,16 +220,16 @@ describe('buildBot', () => {
       username: 'bot',
     } as never;
 
-    const apiCalls: { method: string; payload: unknown }[] = [];
+    const apiCalls: { method: string; payload: MockPayload }[] = [];
     bot.api.config.use((prev, method, payload) => {
-      apiCalls.push({ method, payload: payload as any });
+      apiCalls.push({ method, payload: payload as MockPayload });
       return Promise.resolve({
         ok: true,
         result: {
             message_id: 1,
           date: 0,
           chat: { id: 1, type: 'private' },
-          text: (payload as any).text,
+          text: payload.text,
         },
       } as never);
     });
@@ -247,7 +255,7 @@ describe('buildBot', () => {
     await bot.handleUpdate(fakeUpdate as never);
 
     const helpCall = apiCalls.find((c) =>
-      (c.payload as any).text?.includes('Study Bot'),
+      c.payload.text?.includes('Study Bot'),
     );
     expect(helpCall).toBeDefined()
     expect(helpCall?.payload).toEqual(
@@ -274,16 +282,16 @@ describe('buildBot', () => {
       username: 'bot',
     } as never;
 
-    const apiCalls: { method: string; payload: unknown }[] = [];
+    const apiCalls: { method: string; payload: MockPayload }[] = [];
     bot.api.config.use((prev, method, payload) => {
-      apiCalls.push({ method, payload: payload as any });
+      apiCalls.push({ method, payload: payload as MockPayload });
       return Promise.resolve({
         ok: true,
         result: {
             message_id: 1,
           date: 0,
           chat: { id: 1, type: 'private' },
-          text: (payload as any).text,
+          text: payload.text,
         },
       } as never);
     });
@@ -309,7 +317,7 @@ describe('buildBot', () => {
     await bot.handleUpdate(fakeUpdate as never);
 
     const topicsCall = apiCalls.find((c) =>
-      (c.payload as any).text?.includes('Temas disponibles'),
+      c.payload.text?.includes('Temas disponibles'),
     );
     expect(topicsCall).toBeDefined()
     expect(topicsCall?.payload).toEqual(

@@ -25,6 +25,6 @@ describe('formatQuestion', () => {
     expect(formatted).toContain('Opción B')
     expect(formatted).toContain('Opción C')
     expect(formatted).toContain('Opción D')
-    expect(formatted).toContain('Reacciona al mensaje con el emoji de tu respuesta')
+    expect(formatted).toContain('Reacciona con tu respuesta')
   })
 })

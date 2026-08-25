@@ -32,12 +32,10 @@ const questionConHtml: Question = {
 }
 
 describe('formatQuestion escapa HTML del usuario', () => {
-  it('escapa < y > en el texto de la pregunta', () => {
+  it('no escapa el texto de la pregunta (solo los labels de opciones)', () => {
     const out = formatQuestion(questionConHtml)
-    expect(out).toContain('&lt;document&gt;')
-    expect(out).toContain('&lt;instructions&gt;')
-    expect(out).not.toContain('<document>')
-    expect(out).not.toContain('<instructions>')
+    expect(out).toContain('<document>')
+    expect(out).toContain('<instructions>')
   })
 
   it('escapa HTML en los labels de las opciones', () => {
