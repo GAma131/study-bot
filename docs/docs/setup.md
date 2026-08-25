@@ -2,17 +2,40 @@
 sidebar_position: 2
 ---
 
-# Study Bot
+# Instalación
 
-Bot de Telegram para estudiar la certificación de Anthropic.
+## Requisitos
 
-## ¿Qué es?
+- Node.js 20+
+- MongoDB (local o en la nube)
+- Token de Telegram (vía @BotFather)
 
-Un bot que te envía preguntas de opción múltiple cada cierto tiempo. Responder reaccionando con un emojí, y 5 minutos después te revela la respuesta correcta con explicación.
+## Pasos
 
-## Características
+### 1. Clonar el repositorio
 
-- `/study [minutos]` - Inicia el modo estudio
-- `/study_stop` - Detiene el modo estudio
-- `/topics` - Lista de temas disponibles
-- `/help` - Muestra la ayuda
+```bash
+git clone https://github.com/GAma131/study-bot.git
+cd study-bot
+```
+
+### 2. Instalar dependencias
+
+```bash
+npm install
+```
+
+### 3. Configurar variables de entorno
+
+Crea un archivo `.env`:
+
+```env
+BOT_TOKEN=tu_token_de_telegram
+MONGODB_URI=mongodb://mongodb:27017/study-bot
+```
+
+### 4. Iniciar el bot
+
+```bash
+npm run dev
+```

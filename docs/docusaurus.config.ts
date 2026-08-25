@@ -11,14 +11,18 @@ const config: Config = {
     v4: true,
   },
 
-  url: 'https://github.com/GAma131',
+  url: 'https://GAma131.github.io',
   baseUrl: '/study-bot/',
 
-  organizationName: 'Gamaliel Garcia',
+  organizationName: 'GAma131',
   projectName: 'study-bot',
 
   onBrokenLinks: 'throw',
-  onBrokenMarkdownLinks: 'warn',
+  markdown: {
+    hooks: {
+      onBrokenMarkdownLinks: 'warn',
+    },
+  },
 
   i18n: {
     defaultLocale: 'es',
@@ -50,8 +54,7 @@ const config: Config = {
       title: 'Study Bot',
       items: [
         {
-          type: 'docSidebar',
-          sidebarId: 'guideSidebar',
+          to: '/docs/intro',
           position: 'left',
           label: 'Guía',
         },
