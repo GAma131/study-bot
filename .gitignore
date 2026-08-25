@@ -4,3 +4,6 @@ dist/
 .env
 .DS_Store
 coverage/
+docs/.docusaurus/
+docs/build/
+docs/node_modules/
