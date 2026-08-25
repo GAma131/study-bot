@@ -1,49 +1,32 @@
-import { readFile } from 'node:fs/promises';
-import { join } from 'node:path';
-import { fileURLToPath } from 'node:url';
-import { QuestionSchema, type Question } from '../domain/question.js';
+import { type Question } from '../domain/question.js';
+import { Collection, Db } from 'mongodb';
 
 export class QuestionRepository {
-  private questions: Question[] = [];
+  private collection: Collection<Question>;
 
-  async load(): Promise<void> {
-    const __dirname = fileURLToPath(new URL('.', import.meta.url));
-    const ruta = join(__dirname, 'data.json')
-    const raw = await readFile(ruta, 'utf-8');
-    const data = JSON.parse(raw);
-    const result = QuestionSchema.array().safeParse(data);
-    if (!result.success) {
-      console.error(result.error.issues);
-      throw new Error('JSON inválido');
-    }
-
-    this.questions = result.data;
-
-    if(this.questions.length === 0){
-      console.error('No hay preguntas');
-      throw new Error('No hay preguntas')
-    }
+  constructor(db: Db) {
+    this.collection = db.collection<Question>('questions');
   }
 
-  getAll(): Question[] {
-    return this.questions;
+  async getAll(): Promise<Question[]> {
+    return this.collection.find().toArray()
   }
 
-  getRandom(): Question {
-    const question = this.questions[Math.floor(Math.random() * this.questions.length)]
-    if(!question) throw new Error('No se pudo obtener la pregunta')
-    return question
+  async getRandom(): Promise<Question> {
+    const [question] = await this.collection.aggregate<Question>([
+      { $sample: {size: 1}}
+    ]).toArray();
+
+    if (!question) throw new Error('No hay preguntas');
+
+    return question;
   }
 
-  getById(id: string): Question {
-    const question = this.questions.find((q) => q.id === id)
-    if(!question) throw new Error('No se pudo obtener la pregunta')
-    return question
+  async getById(id: string): Promise<Question | null> {
+    return this.collection.findOne({id})
   }
 
-  getByTopic(topic: string): Question[] {
-    const questions = this.questions.filter((q) => q.topic === topic)
-    if(!questions) throw new Error('No se pudo obtener la pregunta')
-    return questions
+  async getByTopic(topic: string): Promise<Question[]> {
+    return this.collection.find({topic}).toArray()
   }
 }
