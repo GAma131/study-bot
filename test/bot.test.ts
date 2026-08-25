@@ -10,10 +10,34 @@ interface MockPayload {
   [key: string]: unknown;
 }
 
+const mockQuestions = [
+  {
+    id: 'test-001',
+    topic: 'test-topic',
+    text: '¿Pregunta de prueba para el bot?',
+    options: [
+      { key: '👍', label: 'Opción A' },
+      { key: '❤️', label: 'Opción B' },
+      { key: '😂', label: 'Opción C' },
+      { key: '🤣', label: 'Opción D' },
+    ],
+    correctKey: '👍',
+    explanation: 'Explicación de prueba',
+  },
+];
+
+const mockDb = {
+  collection: () => ({
+    find: () => ({ toArray: () => Promise.resolve(mockQuestions) }),
+    aggregate: () => ({ toArray: () => Promise.resolve([mockQuestions[0]]) }),
+    findOne: () => Promise.resolve(mockQuestions[0]),
+  }),
+} as never;
+
 describe('buildBot', () => {
   it('responde el comando /start', async () => {
     const scheduler = new SchedulerService();
-    const bot = await buildBot('TEST_TOKEN_DUMMY', scheduler);
+    const bot = await buildBot('TEST_TOKEN_DUMMY', scheduler, mockDb);
     bot.botInfo = {
       id: 12345,
       is_bot: true,
@@ -60,7 +84,7 @@ describe('buildBot', () => {
 
   it('responde a /study con una pregunta formateada', async () => {
     const scheduler = new SchedulerService();
-    const bot = await buildBot('TEST_TOKEN_DUMMY', scheduler);
+    const bot = await buildBot('TEST_TOKEN_DUMMY', scheduler, mockDb);
     bot.botInfo = {
       id: 1,
       is_bot: true,
@@ -107,7 +131,7 @@ describe('buildBot', () => {
 
   it('responde a /study 15 y agenda el recurrente a ese intervalo', async () => {
     const scheduler = new SchedulerService();
-    const bot = await buildBot('TEST_TOKEN_DUMMY', scheduler);
+    const bot = await buildBot('TEST_TOKEN_DUMMY', scheduler, mockDb);
     bot.botInfo = {
       id: 1,
       is_bot: true,
@@ -157,7 +181,7 @@ describe('buildBot', () => {
 
   it('responde a /study_stop cancelando el recurrente', async () => {
     const scheduler = new SchedulerService();
-    const bot = await buildBot('TEST_TOKEN_DUMMY', scheduler);
+    const bot = await buildBot('TEST_TOKEN_DUMMY', scheduler, mockDb);
     bot.botInfo = {
       id: 1,
       is_bot: true,
@@ -212,7 +236,7 @@ describe('buildBot', () => {
 
   it('responde a /help con la lista de comandos', async () => {
     const scheduler = new SchedulerService();
-    const bot = await buildBot('TEST_TOKEN_DUMMY', scheduler);
+    const bot = await buildBot('TEST_TOKEN_DUMMY', scheduler, mockDb);
     bot.botInfo = {
       id: 1,
       is_bot: true,
@@ -274,7 +298,7 @@ describe('buildBot', () => {
 
   it('responde a /topics listando los temas únicos del repositorio', async () => {
     const scheduler = new SchedulerService();
-    const bot = await buildBot('TEST_TOKEN_DUMMY', scheduler);
+    const bot = await buildBot('TEST_TOKEN_DUMMY', scheduler, mockDb);
     bot.botInfo = {
       id: 1,
       is_bot: true,
