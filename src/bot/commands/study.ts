@@ -35,7 +35,7 @@ export function registerStudyCommand(
 ): void {
   bot.command('study', async (ctx) => {
     const arg = ctx.match;
-    const intervalMin = Number(arg) || 30;
+    const intervalMin = Number(arg) || 60;
     const chatId = ctx.chatId;
 
     await sendQuestionToChat(chatId, bot, repo, scheduler);
