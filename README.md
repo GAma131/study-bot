@@ -24,7 +24,7 @@ Pensado para practicar en chats privados o de estudio grupal: cada quien reaccio
 | Tests | [Vitest](https://vitest.dev/) |
 | Env management | dotenv |
 | Container | Docker multi-stage |
-| Deploy | [Fly.io](https://fly.io/) (free tier) |
+| Deploy | [Railway.app](https://railway.app/) |
 | CI | GitHub Actions |
 
 ## 🏗️ Arquitectura
@@ -93,24 +93,27 @@ docker compose down             # Parar
 ```
 
 El `Dockerfile` usa multi-stage builds para una imagen final pequeña (~150MB) sin TypeScript ni devDependencies.
-
-## ☁️ Deploy en Fly.io
+## ☁️ Deploy en Railway.app
 
 ### Requisitos
-- Cuenta en [Fly.io](https://fly.io/) (gratis)
-- `flyctl` instalado (`brew install flyctl`)
+
+- Cuenta en [Railway.app](https://railway.app/) (gratis con $5 USD/mes de crédito)
+- Repositorio en GitHub
 
 ### Pasos
 
-```bash
-fly auth login
-fly launch --no-deploy
-fly secrets set BOT_TOKEN=tu_token_aqui
-fly deploy
-fly logs
-```
+1. Crea un proyecto en Railway desde tu repo de GitHub
+2. Agrega un servicio de MongoDB desde Railway
+3. Configura las variables de entorno en el servicio del bot:
+   - `BOT_TOKEN` = token de @BotFather
+   - `MONGODB_URI` = referencia a `${{ MongoDB.MONGO_URL }}`
+4. Railway hace auto-deploy en cada push a `main`
 
-El `fly.toml` ya está configurado con región primaria `iad` (Virginia). Puedes cambiarla a `gru` (São Paulo) si prefieres menor latencia en LATAM.
+### Monitoreo
+
+Los logs en tiempo real están disponibles en el dashboard de Railway: **Deployments → View Logs**.
+
+Tu bot consumirá ~$1-2 USD/mes, dentro del crédito gratis de $5.
 
 ## ✅ Tests
 

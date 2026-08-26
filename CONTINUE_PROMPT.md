@@ -13,8 +13,8 @@ Study Bot es un bot de Telegram para estudiar la certificación de Anthropic. En
 - **Tests:** Vitest
 - **Documentación:** Docusaurus (deploy a GitHub Pages)
 - **Container:** Docker multi-stage + docker-compose (servicios `bot` y `mongo`)
-- **Deploy:** Fly.io
-- **CI/CD:** GitHub Actions (`ci.yml`, `fly-deploy.yml`, `deploy-docs.yml`)
+- **Deploy:** Railway.app
+- **CI/CD:** GitHub Actions (`ci.yml`, `deploy-docs.yml`)
 
 ## Estado actual (sesión anterior completada)
 
@@ -39,7 +39,7 @@ src/
 └── index.ts
 test/                  # repository.test.ts, bot.test.ts, integration.test.ts, etc.
 docs/                  # Docusaurus con docusaurus.config.ts y sidebars.ts
-.github/workflows/     # ci.yml, fly-deploy.yml, deploy-docs.yml
+.github/workflows/     # ci.yml, deploy-docs.yml
 ```
 
 ## Features pendientes por implementar
@@ -72,7 +72,7 @@ npm run docs:build   # Build de docs
 
 - **Repo:** https://github.com/GAma131/study-bot
 - **Docs:** https://GAma131.github.io/study-bot/
-- **Bot en producción:** Fly.io (región `iad`)
+- **Bot en producción:** Railway.app
 
 ## Variables de entorno
 
@@ -118,4 +118,4 @@ Colección `questions`:
 - Para features grandes, dividir en pasos pequeños
 - Después de cambios, correr `npm run lint && npm run typecheck && npm test`
 - Los cambios en docs triggerean el workflow de GitHub Pages automáticamente
-- Los pushes a `main` triggerean `fly-deploy.yml` automáticamente
+- Los pushes a `main` triggerean auto-deploy en Railway.app
